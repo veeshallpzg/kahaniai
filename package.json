@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^7.0.7",
     "@supabase/supabase-js": "^2.101.0",
     "clsx": "^2.1.0",
     "groq-sdk": "^1.1.2",

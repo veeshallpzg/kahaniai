@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Hind } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 
 const inter = Inter({
@@ -18,7 +19,7 @@ const hind = Hind({
 export const metadata: Metadata = {
   title: {
     default: "KahaniAI - वायरल हिंदी कहानियां",
-    template: "%s | KahaniAI"
+    template: "%s | KahaniAI",
   },
   description:
     "वायरल हिंदी कहानियां, सेकंडों में। AI-powered scriptwriter for Indian Podcasters.",
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
     "Kahani",
     "AI writer",
     "हिंदी कहानी",
-    "पॉडकास्ट"
+    "पॉडकास्ट",
   ],
   authors: [{ name: "KahaniAI" }],
   creator: "KahaniAI",
@@ -59,12 +60,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="hi" className="dark">
-      <body
-        className={`${inter.variable} ${hind.variable} font-sans bg-charcoal text-offwhite antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="hi" className="dark">
+        <body
+          className={`${inter.variable} ${hind.variable} font-sans bg-charcoal text-offwhite antialiased`}
+        >
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

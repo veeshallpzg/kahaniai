@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useUser } from "@clerk/nextjs";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -22,17 +23,58 @@ const genres = [
 const WORDS_PER_MINUTE = 140;
 
 export default function GeneratePage() {
+  const { isSignedIn, user } = useUser();
   const [genre, setGenre] = useState("");
   const [duration, setDuration] = useState(30);
   const [isLoading, setIsLoading] = useState(false);
   const [generatedStory, setGeneratedStory] = useState("");
   const [error, setError] = useState("");
+  const [credits, setCredits] = useState<number | null>(null);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+  const [checkingCredits, setCheckingCredits] = useState(false);
 
   const estimatedWords = duration * WORDS_PER_MINUTE;
+
+  // Fetch user credits on mount
+  useEffect(() => {
+    if (isSignedIn && user) {
+      fetchCredits();
+    }
+  }, [isSignedIn, user]);
+
+  const fetchCredits = async () => {
+    try {
+      const response = await fetch("/api/user/credits");
+      if (response.ok) {
+        const data = await response.json();
+        setCredits(data.credits);
+      }
+    } catch (err) {
+      console.error("Error fetching credits:", err);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!genre) return;
+
+    // Check credits before generating
+    if (isSignedIn && user) {
+      setCheckingCredits(true);
+      try {
+        const creditCheck = await fetch("/api/user/credits");
+        const creditData = await creditCheck.json();
+        
+        if (creditData.plan !== "pro" && creditData.credits <= 0) {
+          setShowUpgradeModal(true);
+          setCheckingCredits(false);
+          return;
+        }
+      } catch (err) {
+        console.error("Error checking credits:", err);
+      }
+      setCheckingCredits(false);
+    }
 
     setIsLoading(true);
     setError("");
@@ -51,6 +93,9 @@ export default function GeneratePage() {
         const data = await response.json();
         throw new Error(data.error || "Failed to generate story");
       }
+
+      // Refresh credits after successful generation
+      fetchCredits();
 
       const reader = response.body?.getReader();
       if (!reader) throw new Error("No response body");
@@ -79,6 +124,39 @@ export default function GeneratePage() {
     <div className="min-h-screen bg-charcoal">
       <Navbar />
 
+      {/* Upgrade Modal */}
+      {showUpgradeModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+          <div className="bg-charcoal-200 border border-gold rounded-3xl p-8 max-w-md w-full">
+            <div className="text-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gold/20 flex items-center justify-center">
+                <span className="text-3xl">💎</span>
+              </div>
+              <h2 className="text-2xl font-bold text-offwhite mb-2 font-hindi">
+                Credits Exhausted!
+              </h2>
+              <p className="text-offwhite/60 mb-6 font-hindi">
+                आपके सभी credits खत्म हो गए हैं। Pro plan में upgrade करें और enjoy करें unlimited stories!
+              </p>
+              <div className="space-y-3">
+                <a
+                  href="/pricing"
+                  className="block w-full py-3 px-6 rounded-xl bg-gold text-charcoal font-semibold font-hindi hover:bg-gold-400 transition-all duration-300 gold-glow text-center"
+                >
+                  Pro में Upgrade करें - ₹299/mo
+                </a>
+                <button
+                  onClick={() => setShowUpgradeModal(false)}
+                  className="block w-full py-3 px-6 rounded-xl bg-transparent border border-gold/30 text-gold font-semibold font-hindi hover:bg-gold/10 transition-all duration-300"
+                >
+                  बाद में
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <main className="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto">
           {/* Page Header */}
@@ -90,6 +168,27 @@ export default function GeneratePage() {
               अपनी पॉडकास्ट के लिए एक compelling कहानी बनाएं
             </p>
           </div>
+
+          {/* Credits Display */}
+          {isSignedIn && credits !== null && (
+            <div className="mb-6 p-4 bg-charcoal-200/50 rounded-xl border border-gold/20 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-gold text-2xl">💎</span>
+                <div>
+                  <p className="text-offwhite/60 text-sm font-hindi">Your Credits</p>
+                  <p className="text-offwhite font-bold font-hindi">
+                    {credits === Infinity ? "∞ Unlimited" : credits}
+                  </p>
+                </div>
+              </div>
+              <a
+                href="/pricing"
+                className="text-gold text-sm font-hindi hover:underline"
+              >
+                Upgrade to Pro
+              </a>
+            </div>
+          )}
 
           {/* Form Card */}
           <div className="bg-charcoal-200/50 rounded-3xl p-8 sm:p-10 border border-gold/10">
@@ -169,7 +268,6 @@ export default function GeneratePage() {
                       background: `linear-gradient(to right, #D4AF37 0%, #D4AF37 ${((duration - 10) / 50) * 100}%, #1f1f1f ${((duration - 10) / 50) * 100}%, #1f1f1f 100%)`,
                     }}
                   />
-                  {/* Custom range thumb */}
                   <style jsx>{`
                     input[type="range"]::-webkit-slider-thumb {
                       -webkit-appearance: none;
@@ -223,12 +321,12 @@ export default function GeneratePage() {
               {/* Submit Button */}
               <button
                 type="submit"
-                disabled={!genre || isLoading}
+                disabled={!genre || isLoading || checkingCredits}
                 className={`w-full py-4 px-8 rounded-xl font-semibold text-lg font-hindi
                             flex items-center justify-center gap-3
                             transition-all duration-300
                             ${
-                              !genre
+                              !genre || isLoading || checkingCredits
                                 ? "bg-gold/30 text-charcoal/50 cursor-not-allowed"
                                 : "bg-gold text-charcoal hover:bg-gold-400 gold-glow hover:scale-[1.02]"
                             }
@@ -237,7 +335,6 @@ export default function GeneratePage() {
               >
                 {isLoading ? (
                   <>
-                    {/* Spinning Chakra Icon */}
                     <svg
                       className="w-6 h-6 animate-spin"
                       viewBox="0 0 24 24"
@@ -256,11 +353,12 @@ export default function GeneratePage() {
                         fill="currentColor"
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       />
-                      {/* Chakra center dot */}
                       <circle cx="12" cy="12" r="3" fill="currentColor" />
                     </svg>
                     <span>Generating Story...</span>
                   </>
+                ) : checkingCredits ? (
+                  <span>Checking Credits...</span>
                 ) : (
                   <>
                     <span>Generate Script</span>
