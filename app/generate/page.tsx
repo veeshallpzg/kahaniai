@@ -268,33 +268,6 @@ export default function GeneratePage() {
                       background: `linear-gradient(to right, #D4AF37 0%, #D4AF37 ${((duration - 10) / 50) * 100}%, #1f1f1f ${((duration - 10) / 50) * 100}%, #1f1f1f 100%)`,
                     }}
                   />
-                  <style jsx>{`
-                    input[type="range"]::-webkit-slider-thumb {
-                      -webkit-appearance: none;
-                      appearance: none;
-                      width: 24px;
-                      height: 24px;
-                      border-radius: 50%;
-                      background: #D4AF37;
-                      cursor: pointer;
-                      border: 3px solid #121212;
-                      box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-                      transition: all 0.2s ease;
-                    }
-                    input[type="range"]::-webkit-slider-thumb:hover {
-                      transform: scale(1.1);
-                      box-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
-                    }
-                    input[type="range"]::-moz-range-thumb {
-                      width: 24px;
-                      height: 24px;
-                      border-radius: 50%;
-                      background: #D4AF37;
-                      cursor: pointer;
-                      border: 3px solid #121212;
-                      box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-                    }
-                  `}</style>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-offwhite/50 text-sm font-hindi">10 min</span>
