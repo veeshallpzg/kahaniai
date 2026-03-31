@@ -1,6 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 export default function HeroSection() {
+  const router = useRouter();
+
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
       {/* Decorative background elements */}
@@ -22,22 +26,22 @@ export default function HeroSection() {
         {/* Badge */}
         <div className="inline-flex items-center px-4 py-2 rounded-full bg-gold/10 border border-gold/20 mb-8 animate-fade-in">
           <span className="w-2 h-2 rounded-full bg-gold mr-2 animate-pulse" />
-          <span className="text-gold text-sm font-medium font-hindi">
+          <span className="text-gold text-sm font-medium">
             AI-Powered Storytelling
           </span>
         </div>
 
         {/* Main Headline */}
         <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-slide-up">
-          <span className="font-hindi text-offwhite">
-            वायरल हिंदी कहानियां,
+          <span className="text-offwhite">
+            Viral Hindi Stories,
           </span>
           <br />
-          <span className="font-hindi gold-gradient-text">सेकंडों में</span>
+          <span className="gold-gradient-text">in Seconds</span>
         </h1>
 
         {/* Subtext */}
-        <p className="text-lg sm:text-xl md:text-2xl text-offwhite/70 mb-10 max-w-2xl mx-auto font-hindi animate-slide-up" style={{ animationDelay: "0.1s" }}>
+        <p className="text-lg sm:text-xl md:text-2xl text-offwhite/70 mb-10 max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: "0.1s" }}>
           AI-powered scriptwriter for Indian Podcasters
         </p>
 
@@ -45,36 +49,38 @@ export default function HeroSection() {
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up" style={{ animationDelay: "0.2s" }}>
           <button
             type="button"
+            onClick={() => router.push("/generate")}
             className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gold text-charcoal font-semibold text-lg
                        hover:bg-gold-400 transition-all duration-300 gold-glow
                        focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-charcoal
                        transform hover:scale-105"
           >
-            <span className="font-hindi">शुरू करें</span>
+            Start Creating
             <span className="ml-2">→</span>
           </button>
           <button
             type="button"
+            onClick={() => document.getElementById("features")?.scrollIntoView({ behavior: "smooth" })}
             className="w-full sm:w-auto px-8 py-4 rounded-xl bg-transparent border border-offwhite/30 text-offwhite font-medium text-lg
                        hover:bg-offwhite/10 transition-all duration-300
                        focus:outline-none focus:ring-2 focus:ring-offwhite/50 focus:ring-offset-2 focus:ring-offset-charcoal"
           >
-            <span className="font-hindi">और जानें</span>
+            Learn More
           </button>
         </div>
 
         {/* Stats/Social proof */}
         <div className="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto animate-slide-up" style={{ animationDelay: "0.3s" }}>
           <div className="text-center">
-            <div className="text-2xl sm:text-3xl font-bold text-gold font-hindi">10K+</div>
-            <div className="text-xs sm:text-sm text-offwhite/50 font-hindi">कहानियां</div>
+            <div className="text-2xl sm:text-3xl font-bold text-gold">10K+</div>
+            <div className="text-xs sm:text-sm text-offwhite/50">Stories</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl sm:text-3xl font-bold text-gold font-hindi">500+</div>
-            <div className="text-xs sm:text-sm text-offwhite/50 font-hindi">पॉडकास्टर्स</div>
+            <div className="text-2xl sm:text-3xl font-bold text-gold">500+</div>
+            <div className="text-xs sm:text-sm text-offwhite/50">Podcasters</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl sm:text-3xl font-bold text-gold font-hindi">4.9★</div>
+            <div className="text-2xl sm:text-3xl font-bold text-gold">4.9★</div>
             <div className="text-xs sm:text-sm text-offwhite/50">Rating</div>
           </div>
         </div>

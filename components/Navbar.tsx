@@ -14,9 +14,9 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gold to-gold-600 flex items-center justify-center">
-              <span className="text-charcoal font-bold text-xl font-hindi">क</span>
+              <span className="text-charcoal font-bold text-xl">K</span>
             </div>
-            <span className="text-xl font-bold text-offwhite font-hindi">
+            <span className="text-xl font-bold text-offwhite">
               Kahani<span className="text-gold">AI</span>
             </span>
           </Link>
@@ -25,20 +25,20 @@ export default function Navbar() {
           <div className="flex items-center gap-4">
             <Link
               href="/pricing"
-              className="px-4 py-2 text-offwhite/70 hover:text-gold transition-colors font-hindi text-sm"
+              className="px-4 py-2 text-offwhite/70 hover:text-gold transition-colors text-sm"
             >
               Pricing
             </Link>
             <Link
               href="/dashboard"
-              className="px-4 py-2 text-offwhite/70 hover:text-gold transition-colors font-hindi text-sm"
+              className="px-4 py-2 text-offwhite/70 hover:text-gold transition-colors text-sm"
             >
               Dashboard
             </Link>
             
             {!isSignedIn ? (
               <SignInButton mode="modal">
-                <button className="px-5 py-2 rounded-lg bg-gold text-charcoal font-medium hover:bg-gold-400 transition-all duration-300 font-hindi text-sm">
+                <button className="px-5 py-2 rounded-lg bg-gold text-charcoal font-medium hover:bg-gold-400 transition-all duration-300 text-sm">
                   Login
                 </button>
               </SignInButton>

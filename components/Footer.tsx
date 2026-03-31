@@ -10,11 +10,11 @@ export default function Footer() {
           {/* Logo & Copyright */}
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-gold to-gold-600 flex items-center justify-center">
-              <span className="text-charcoal font-bold text-sm font-hindi">क</span>
+              <span className="text-charcoal font-bold text-sm">K</span>
             </div>
             <span className="text-sm text-offwhite/60">
               © {currentYear}{" "}
-              <span className="text-gold font-hindi">KahaniAI</span>. All rights reserved.
+              <span className="text-gold">KahaniAI</span>. All rights reserved.
             </span>
           </div>
 
@@ -22,13 +22,13 @@ export default function Footer() {
           <div className="flex items-center space-x-6 text-sm text-offwhite/50">
             <a
               href="#"
-              className="hover:text-gold transition-colors duration-300 font-hindi"
+              className="hover:text-gold transition-colors duration-300"
             >
               Privacy
             </a>
             <a
               href="#"
-              className="hover:text-gold transition-colors duration-300 font-hindi"
+              className="hover:text-gold transition-colors duration-300"
             >
               Terms
             </a>

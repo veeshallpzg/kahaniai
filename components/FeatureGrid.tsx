@@ -3,7 +3,6 @@
 const features = [
   {
     title: "Indian Context",
-    titleHindi: "भारतीय संदर्भ",
     description: "Stories deeply rooted in Indian culture, traditions, and contemporary life that resonate with your audience.",
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -13,7 +12,6 @@ const features = [
   },
   {
     title: "Human-like Tone",
-    titleHindi: "मानव जैसी आवाज़",
     description: "Natural, conversational Hindi that sounds authentic and engaging, just like a real storyteller.",
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -23,7 +21,6 @@ const features = [
   },
   {
     title: "Perfect Twists",
-    titleHindi: "परफेक्ट ट्विस्ट",
     description: "Captivating plot twists and cliffhangers that keep listeners hooked till the very end.",
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -35,7 +32,7 @@ const features = [
 
 export default function FeatureGrid() {
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-charcoal relative">
+    <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 bg-charcoal relative">
       {/* Section background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-1/4 w-64 h-64 rounded-full bg-gold/3 blur-3xl" />
@@ -45,14 +42,14 @@ export default function FeatureGrid() {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/20 text-gold text-sm font-medium mb-4 font-hindi">
+          <span className="inline-block px-4 py-1 rounded-full bg-gold/10 border border-gold/20 text-gold text-sm font-medium mb-4">
             Features
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-offwhite mb-4 font-hindi">
-            क्यों <span className="text-gold">KahaniAI</span>?
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-offwhite mb-4">
+            Why <span className="text-gold">KahaniAI</span>?
           </h2>
-          <p className="text-offwhite/60 text-lg max-w-2xl mx-auto font-hindi">
-            हमारी AI आपकी storytelling को अगले स्तर पर ले जाती है
+          <p className="text-offwhite/60 text-lg max-w-2xl mx-auto">
+            Our AI takes your storytelling to the next level
           </p>
         </div>
 
@@ -74,15 +71,12 @@ export default function FeatureGrid() {
               </div>
 
               {/* Title */}
-              <h3 className="relative z-10 text-xl sm:text-2xl font-bold text-offwhite mb-2 font-hindi group-hover:text-gold transition-colors duration-300">
+              <h3 className="relative z-10 text-xl sm:text-2xl font-bold text-offwhite mb-2 group-hover:text-gold transition-colors duration-300">
                 {feature.title}
               </h3>
-              <p className="relative z-10 text-gold text-sm font-medium mb-4 font-hindi">
-                {feature.titleHindi}
-              </p>
 
               {/* Description */}
-              <p className="relative z-10 text-offwhite/60 leading-relaxed font-hindi">
+              <p className="relative z-10 text-offwhite/60 leading-relaxed">
                 {feature.description}
               </p>
 
